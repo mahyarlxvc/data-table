@@ -4,7 +4,7 @@ import { DUMMY_ACCESSIBILITIES } from '../../constants/accessibilities'
 import TableHeader from './TableHeader';
 import HeaderEditMenu from './HeaderEditMenu';
 import CreateHeaderBtn from './CreateHeaderBtn';
-import TableData from './TableData';
+import TableDataCell from './TableDataCell';
 
 
 function DataTable() {
@@ -104,7 +104,7 @@ function DataTable() {
                                             {title}
                                         </th>
                                         {roles.map(() => (
-                                            <TableData />
+                                            <TableDataCell />
                                         ))}
                                     </tr>
                                 ))}
