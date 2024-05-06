@@ -1,9 +1,9 @@
 
-function Input({ id, defaultValue, blurHandler }) {
+function Input({ id, type, defaultValue, blurHandler }) {
     return (
         <input
             id={id}
-            type='text'
+            type={type}
             defaultValue={defaultValue}
             onBlur={blurHandler}
             className='bg-inherit text-center w-40'
