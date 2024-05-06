@@ -71,10 +71,10 @@ function DataTable() {
                 <div className='h-fit  m-auto '>
                     <div className='relative w-full py-2 pt-6 px-2 overflow-x-scroll'>
                         <CreateHeaderBtn createHeaderHandler={createRole} />
-                        <table className='border-collapse border rounded-md w-[98%] overflow-hidden m-auto'>
+                        <table className='border-collapse outline outline-gray-700 outline-1 shadow-lg shadow-gray-950 rounded-xl w-[98%] overflow-hidden m-auto'>
                             <thead>
                                 <tr className='mx-8 bg-primary-dark '>
-                                    <th className='border border-l-primary-red border-b-gray-600'>
+                                    <th className='border border-l-primary-red border-b-gray-600 border-r-0 border-t-0' >
                                         <div className='relative'>
                                             <p>امکانات</p>
                                         </div>
@@ -100,7 +100,7 @@ function DataTable() {
                             <tbody>
                                 {accessibilities.map(({ id, title }) => (
                                     <tr>
-                                        <th id className='px-8 py-4 text-center border font-bold text-lg border-l-primary-red border-b-gray-600 text-nowrap' >
+                                        <th id className='px-8 py-4 text-center border font-bold text-lg border-l-primary-red border-b-gray-600 border-r-0 border-t-0 text-nowrap' >
                                             {title}
                                         </th>
                                         {roles.map(() => (
