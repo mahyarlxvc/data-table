@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .custom-th {
+        @apply px-8 py-3
+    }
+
+    .custom-table-cell {
+        @apply px-8 py-1
+    }
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    direction: rtl;
+    cursor: default;
+    color: aliceblue;
+}
+
+*,
+*::after,
+*::before {
+    outline: none;
+    box-sizing: border-box;
+}
