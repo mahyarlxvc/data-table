@@ -13,23 +13,43 @@ function DataTable() {
     const [accessibilities, setAccessibilities] = useState(DUMMY_ACCESSIBILITIES)
     const [isEditMenueOpen, setIsEditMenueOpen] = useState({ isClicked: false, elemId: "" })
 
+    const checkBoxHandler = ({ target }) => {
+        setRoles(prev => {
+            prev.filter(role => role.id === target.id)[0].grantedAccessibilities[target.value] = target.checked
+            return prev
+        })
+
+        // const filtered = roles.filter(role => role.id === target.id)
+        // const filteredIndex = roles.indexOf(filtered[0])
+        // const newRole = {
+        //     id: filtered[0].id,
+        //     title: filtered[0].title,
+        //     grantedAccessibilities: filtered[0].grantedAccessibilities[target.value] = target.checked
+        // }
+        // const newRoles = roles.toSpliced(filteredIndex, 1, newRole)
+        // setRoles(newRoles)
+
+    }
     const updateRoleTitle = ({ target }) => {
         const filtered = roles.filter(role => role.id === target.id)
         const filteredIndex = roles.indexOf(filtered[0])
         const newRole = {
-            id: target.id,
-            title: target.value
+            id: filtered[0].id,
+            title: target.value,
+            value: filtered[0].value,
+            grantedAccessibilities: filtered[0].grantedAccessibilities
         }
         const newRoles = roles.toSpliced(filteredIndex, 1, newRole)
         setRoles(newRoles)
     }
-
     const copyRole = ({ target: { id } }) => {
         const filtered = roles.filter(role => role.id === id)
         const filteredIndex = roles.indexOf(filtered[0])
         const newRole = {
             id: crypto.randomUUID(),
-            title: filtered[0].title
+            title: filtered[0].title,
+            value: filtered[0].value,
+            grantedAccessibilities: filtered[0].grantedAccessibilities
         }
         const newRoles = roles.toSpliced(filteredIndex, 0, newRole)
         setRoles(newRoles)
@@ -38,29 +58,37 @@ function DataTable() {
     const removeRole = ({ target: { id } }) => {
         setRoles(prev => prev.filter(role => role.id !== id))
     }
-
     const toggleEditMenu = ({ target: { id } }) => {
         setIsEditMenueOpen(prev => ({ isClicked: !prev.isClicked, elemId: id }))
     }
-
-
     const createRole = () => {
         const newTitle = prompt("عنوان؟")
-        if (newTitle) {
+        const newValue = prompt("ولیو؟")
+        if (newTitle && newValue) {
             const newRole = {
+                id: crypto.randomUUID(),
                 title: newTitle,
-                id: crypto.randomUUID()
+                value: newValue,
+                grantedAccessibilities: {
+                    test1: false,
+                    test2: false,
+                    test3: false,
+                    test4: false,
+                    test5: false,
+                    test6: false,
+                    test7: false,
+                    test8: false,
+                    test9: false
+                }
             }
             setRoles(prev => [newRole, ...prev])
 
         }
     }
 
-
     useEffect(() => {
         setKey(Math.random())
     }, [roles])
-
 
     return (
         <>
@@ -81,7 +109,7 @@ function DataTable() {
                                     </th>
 
                                     {roles.map(({ id, title }) => (
-                                        <th className='px-8 py-4 border border-gray-600' >
+                                        <th key={id} className='px-8 py-4 border border-gray-600' >
                                             <div className='flex justify-center'>
                                                 <TableHeader key={key} id={id} title={title} blurHandler={updateRoleTitle} />
                                                 <HeaderEditMenu
@@ -98,13 +126,13 @@ function DataTable() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {accessibilities.map(({ id, title }) => (
-                                    <tr>
-                                        <th id className='px-8 py-4 text-center border font-bold text-lg border-l-primary-red border-b-gray-600 border-r-0 border-t-0 text-nowrap' >
+                                {accessibilities.map(({ id, title, value: accessibilityValue }) => (
+                                    <tr key={id}>
+                                        <th className='px-8 py-4 text-center border font-bold text-lg border-l-primary-red border-b-gray-600 border-r-0 border-t-0 text-nowrap' >
                                             {title}
                                         </th>
-                                        {roles.map(() => (
-                                            <TableDataCell />
+                                        {roles.map(({ id, value: roleValue }) => (
+                                            < TableDataCell key={id} roleId={id} value={accessibilityValue} clickHandler={checkBoxHandler} />
                                         ))}
                                     </tr>
                                 ))}
@@ -112,7 +140,6 @@ function DataTable() {
                         </table>
                     </div>
                 </div>
-
             </div>
         </>
     )
